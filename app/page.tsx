@@ -25,6 +25,7 @@ export default function Home() {
       setImage(data.results);
       setCurrentPage(page);
     } catch (error) {
+      console.error(error);
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
