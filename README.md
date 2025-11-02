@@ -20,12 +20,13 @@ A Next.js app that lets users create personalized thank you cards with images fr
 - Overlay custom text with different fonts and colors
 - Download generated cards
 
-- TECH STACK
-- Frontend: Next.js, React, Tailwind CSS, ShadCN/UI
-- API: Unsplash API
-- Language: TypeScript
+**TECH STACK**
 
-USAGE
+1. Frontend: Next.js, React, Tailwind CSS, ShadCN/UI
+2. API: Unsplash API
+3. Language: TypeScript
+
+**USAGE**
 
 1. Search for or browse Unsplash images.
 2. Click on an image to select it.
