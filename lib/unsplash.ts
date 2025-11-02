@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 /**
  * Represents an image fetched from Unsplash
@@ -18,8 +19,8 @@ export interface UnsplashImage {
 
 interface SearchResponse {
   results: UnsplashImage[];
-  total: number;
-  total_pages: number;
+  page: number;
+  perPage: number;
 }
 
 /**
@@ -38,8 +39,12 @@ export async function searchImage(
   try {
     const accessKey = process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY;
     if (!accessKey) {
-      throw new Error("Failed to get access key!");
+      toast.error(
+        "Access key is missing! Please check your environment variables."
+      );
+      return { results: [], page: 0, perPage: 0 };
     }
+
     const response = await axios.get(
       "https://api.unsplash.com/search/collections",
       {
@@ -55,7 +60,9 @@ export async function searchImage(
 
     return results;
   } catch (error) {
-    throw error;
+    console.error(error);
+    toast.error("Failed to fetch images. Please try again.");
+    return { results: [], page: 0, perPage: 0 };
   }
 }
 

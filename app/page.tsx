@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SearchAndImageGrid from "../components/SearchAndImagePanel";
 import { searchImage, UnsplashImage } from "@/lib/unsplash";
 import { toast } from "react-toastify";
@@ -24,9 +24,6 @@ export default function Home() {
       const data = await searchImage(searchQuery, page);
       setImage(data.results);
       setCurrentPage(page);
-    } catch (error) {
-      console.error(error);
-      toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }
