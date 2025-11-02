@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Thank You Card Creator
 
-## Getting Started
+A Next.js app that lets users create personalized thank you cards with images from Unsplash.
 
-First, run the development server:
+## Setup
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. `npm install`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Create a `.env` file:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- UNSPLASH_ACCESS_KEY=your_access_key_here
+  (replace `your_access_key_here` with your Unsplash developer access key.  
+   Make sure the `.env` file is **not committed to version control**.)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. `npm run dev`
 
-## Learn More
+## Features
 
-To learn more about Next.js, take a look at the following resources:
+- Search and select images from Unsplash
+- Overlay custom text with different fonts and colors
+- Download generated cards
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- TECH STACK
+- Frontend: Next.js, React, Tailwind CSS, ShadCN/UI
+- API: Unsplash API
+- Language: TypeScript
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+USAGE
 
-## Deploy on Vercel
+1. Search for or browse Unsplash images.
+2. Click on an image to select it.
+3. Enter your name in the personalization panel.
+4. Choose a font and color for your name.
+5. Preview your card.
+6. Click Download to save the card as a PNG.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Acknowledgements**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Unsplash API
+  for high-quality free images
+- Next.js
+  for the React framework
+- Tailwind CSS
+  for utility-first styling
+- ShadCN/UI
+  for reusable UI components
