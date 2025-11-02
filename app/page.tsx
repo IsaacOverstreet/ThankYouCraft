@@ -93,7 +93,7 @@ export default function Home() {
             </section>
           </div>
         ) : (
-          <div className="bg-white rounded-2xl shadow-2xl p-12 text-center mt-6 lg:mt-0 border border-red-800 max-h-[400px] flex justify-center">
+          <div className="bg-white rounded-2xl shadow-2xl p-12 text-center mt-6 lg:mt-0  max-h-[400px] flex justify-center">
             <div className="max-w-md mx-auto  my-auto">
               <div className="w-24 h-24 bg-linear-to-br from-purple-200 to-indigo-200 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Sparkles className="h-12 w-12 text-indigo-600" />
