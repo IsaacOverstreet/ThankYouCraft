@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { UnsplashImage } from "@/lib/unsplash";
 import { Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -26,31 +26,52 @@ export default function CardPreview({
   fontColor,
 }: CardPreviewProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [downloading, setDownloading] = useState<boolean>(false);
 
   const handleDownload = async () => {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    // ✅ Ignore double-clicks
+    if (downloading) return;
+    setDownloading(true);
 
-    canvas.width = 1200;
-    canvas.height = 1500;
+    try {
+      // Pre-load image with better error handling
+      const browserImage = new window.Image();
+      browserImage.crossOrigin = "anonymous";
 
-    const browserImage = new window.Image();
-    browserImage.crossOrigin = "anonymous";
+      const imageLoadPromise = new Promise<HTMLImageElement>(
+        (resolve, reject) => {
+          browserImage.onload = () => resolve(browserImage);
+          browserImage.onerror = () =>
+            reject(new Error("Failed to load image"));
+          setTimeout(() => reject(new Error("Image load timeout")), 30000);
+        }
+      );
 
-    browserImage.onload = () => {
-      ctx.drawImage(browserImage, 0, 0, canvas.width, canvas.height);
+      browserImage.src =
+        image.cover_photo.urls.regular || image.cover_photo.urls.full;
+
+      const loadedImage = await imageLoadPromise;
+
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d", { alpha: false });
+
+      if (!ctx) throw new Error("Canvas context not available");
+
+      canvas.width = 1200;
+      canvas.height = 1500;
+
+      ctx.drawImage(loadedImage, 0, 0, canvas.width, canvas.height);
 
       ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
-
-      ctx.font = `bold 180px ${fontFamily}`;
-      ctx.fillStyle = fontColor;
       ctx.strokeStyle = "rgba(0, 0, 0, 0.5)";
       ctx.lineWidth = 4;
+      ctx.fillStyle = fontColor;
+
+      ctx.font = `bold 180px ${fontFamily}`;
       ctx.strokeText("Thank You", canvas.width / 2, 300);
       ctx.fillText("Thank You", canvas.width / 2, 300);
 
@@ -60,21 +81,34 @@ export default function CardPreview({
         ctx.fillText(userName, canvas.width / 2, canvas.height - 200);
       }
 
-      canvas.toBlob((blob) => {
-        if (blob) {
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = `thank-you-card-${Date.now()}.png`;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-        }
-      }, "image/png");
-    };
+      const blob = await new Promise<Blob>((resolve, reject) => {
+        canvas.toBlob(
+          (b) => (b ? resolve(b) : reject(new Error("Blob creation failed"))),
+          "image/png",
+          1.0
+        );
+      });
 
-    browserImage.src = image.cover_photo.urls.full;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `thank-you-card-${Date.now()}.png`;
+      a.style.display = "none";
+      document.body.appendChild(a);
+
+      await new Promise((resolve) => setTimeout(resolve, 100));
+      a.click();
+
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 100);
+    } catch (error) {
+      console.error("Download failed:", error);
+      alert("Failed to download image. Please try again.");
+    } finally {
+      setDownloading(false);
+    }
   };
 
   return (
@@ -108,10 +142,11 @@ export default function CardPreview({
       <Button
         onClick={handleDownload}
         size="lg"
-        className="w-full h-14 text-lg rounded-xl bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl transition-all duration-300"
+        disabled={downloading}
+        className="w-full h-14 text-lg active:scale-105  rounded-xl bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg hover:shadow-xl transition-all duration-300"
       >
         <Download className="mr-2 h-5 w-5" />
-        Download Card
+        {downloading ? "Downloading..." : "Download Card"}
       </Button>
 
       <canvas ref={canvasRef} className="hidden" />
