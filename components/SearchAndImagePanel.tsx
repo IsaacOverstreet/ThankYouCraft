@@ -58,28 +58,30 @@ export default function SearchAndImageGrid({
         </div>
       </form>
 
-      <div className="w-full  grid grid-cols-2 gap-3.5 mb-3">
+      <div className="w-full flex  gap-3.5 mb-3">
         {loading ? (
           <ImageGridSkeleton />
         ) : (
-          image.map((img) => (
-            <Button
-              onClick={() => onSelectImage(img)}
-              key={img.id}
-              className={`relative w-full h-[200px] lg:h-[300px] md:h-[300px] group overflow-hidden rounded-xl transition-all duration-300 aspect-4/5 ${
-                selectedImage?.id === img.id
-                  ? "ring-4 ring-blue-500 ring-offset-2 shadow-2xl scale-[1.02]"
-                  : "hover:shadow-xl hover:scale-[1.02] ring-2 ring-gray-200"
-              }`}
-            >
-              <Image
-                src={img.cover_photo.urls.regular}
-                alt={img.cover_photo.alt_description || "unsplash"}
-                className="w-full h-full object-cover"
-                fill
-              />
-            </Button>
-          ))
+          <div className="w-full flex flex-wrap  justify-center gap-2.5 mb-3">
+            {image.map((img) => (
+              <Button
+                onClick={() => onSelectImage(img)}
+                key={img.id}
+                className={`relative w-[47.9%] md:w-[48.6%] xl:w-[49%] sm:w-[48%] lg:h-[300px] md:h-[300px] h-[200px] group overflow-hidden rounded-xl transition-all duration-300 aspect-4/5 ${
+                  selectedImage?.id === img.id
+                    ? "ring-4 ring-blue-500 ring-offset-2 shadow-2xl scale-[1.02]"
+                    : "hover:shadow-xl hover:scale-[1.02] ring-2 ring-gray-200"
+                }`}
+              >
+                <Image
+                  src={img.cover_photo.urls.regular}
+                  alt={img.cover_photo.alt_description || "unsplash"}
+                  className="w-full h-full object-cover"
+                  fill
+                />
+              </Button>
+            ))}
+          </div>
         )}
       </div>
 

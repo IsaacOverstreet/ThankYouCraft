@@ -2,7 +2,7 @@
 import { useState } from "react";
 import SearchAndImageGrid from "../components/SearchAndImagePanel";
 import { searchImage, UnsplashImage } from "@/lib/unsplash";
-import { toast } from "react-toastify";
+
 import { Sparkles } from "lucide-react";
 import PersonaliseDetails from "../components/PersonalisationInfo";
 import PreviewCard from "@/components/PreviewCard";
@@ -43,9 +43,9 @@ export default function Home() {
       </div>
 
       {/* Main Content */}
-      <div className="w-full flex flex-col lg:flex-row gap-8">
+      <div className="w-full flex flex-col lg:flex-row justify-center gap-8">
         {/* Image Selection */}
-        <div className="w-full lg:w-1/2">
+        <div className="w-full  xl:w-1/2 ">
           <section className="rounded-xl p-4 bg-white shadow-lg border border-gray-200">
             <h2 className="text-xl font-semibold text-indigo-800 mb-6">
               Choose Your Image
