@@ -58,11 +58,11 @@ export default function SearchAndImageGrid({
         </div>
       </form>
 
-      <div className="w-full  flex  gap-3.5 mb-3 border">
+      <div className="w-full flex  gap-3.5 mb-3">
         {loading ? (
           <ImageGridSkeleton />
         ) : (
-          <div className="w-full border border-amber-700 flex flex-wrap  justify-center gap-2.5 mb-3">
+          <div className="w-full flex flex-wrap  justify-center gap-2.5 mb-3">
             {image.map((img) => (
               <Button
                 onClick={() => onSelectImage(img)}

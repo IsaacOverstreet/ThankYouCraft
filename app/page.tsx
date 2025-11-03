@@ -43,7 +43,7 @@ export default function Home() {
       </div>
 
       {/* Main Content */}
-      <div className="w-full flex flex-col lg:flex-row border justify-center border-gray-950  gap-8">
+      <div className="w-full flex flex-col lg:flex-row justify-center gap-8">
         {/* Image Selection */}
         <div className="w-full  xl:w-1/2 ">
           <section className="rounded-xl p-4 bg-white shadow-lg border border-gray-200">
